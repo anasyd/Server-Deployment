@@ -1,4 +1,4 @@
-Below is the guide that includes instructions for setting up SSH keys for GitHub as well as configuring your `~/.ssh/config` file if you host multiple repositories using different SSH keys.
+This guide includes instructions for setting up SSH keys for GitHub and configuring your `~/.ssh/config` file if you host multiple repositories using different SSH keys and also configuring Nginx as a reverse proxy using both the traditional `sites-available`/`sites-enabled` method and the `conf.d` method.
 
 ---
 
@@ -258,6 +258,116 @@ sudo env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -
 ```
 
 Your Node.js/Express.js application is now set up to start on boot with PM2.
+
+---
+
+## Configuring Nginx as a Reverse Proxy
+
+Nginx can be used to serve your Node.js application by acting as a reverse proxy. This setup can help with load balancing, SSL termination, and serving static files.
+
+### 1. Install Nginx
+
+```sh
+sudo apt install nginx
+```
+
+### 2. Configure Nginx
+
+There are two common methods for configuring Nginx:
+
+---
+
+### **Method 1: Using `sites-available`/`sites-enabled`**
+
+1. **Create a New Configuration File**
+    
+    Create a new file in `/etc/nginx/sites-available/` (e.g., `node_app`):
+    
+    ```sh
+    sudo nano /etc/nginx/sites-available/node_app
+    ```
+    
+2. **Add the Following Configuration**
+    
+    Adjust the values as needed:
+    
+    ```nginx
+    server {
+        listen 80;
+        server_name your_domain_or_IP;
+    
+        location / {
+            proxy_pass http://127.0.0.1:3000;  # Replace 3000 with your Node.js application's port
+            proxy_http_version 1.1;
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection 'upgrade';
+            proxy_set_header Host $host;
+            proxy_cache_bypass $http_upgrade;
+        }
+    }
+    ```
+    
+3. **Enable the Configuration**
+    
+    Create a symbolic link to enable your new configuration:
+    
+    ```sh
+    sudo ln -s /etc/nginx/sites-available/node_app /etc/nginx/sites-enabled/
+    ```
+    
+
+---
+
+### **Method 2: Using the `conf.d` Directory**
+
+4. **Create a Configuration File**
+    
+    Create a new file in `/etc/nginx/conf.d/` (e.g., `node_app.conf`):
+    
+    ```sh
+    sudo nano /etc/nginx/conf.d/node_app.conf
+    ```
+    
+5. **Add the Following Configuration**
+    
+    Adjust the values as needed:
+    
+    ```nginx
+    server {
+        listen 80;
+        server_name your_domain_or_IP;
+    
+        location / {
+            proxy_pass http://127.0.0.1:3000;  # Replace 3000 with your Node.js application's port
+            proxy_http_version 1.1;
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection 'upgrade';
+            proxy_set_header Host $host;
+            proxy_cache_bypass $http_upgrade;
+        }
+    }
+    ```
+    
+
+_Note:_ Using `conf.d` is a simpler alternative where each configuration file is automatically included by Nginx. You typically don’t need to create symbolic links.
+
+---
+
+### 3. Test and Restart Nginx
+
+Test the configuration for syntax errors:
+
+```sh
+sudo nginx -t
+```
+
+If the test is successful, restart Nginx:
+
+```sh
+sudo systemctl restart nginx
+```
+
+Your Node.js application should now be accessible through Nginx on port 80.
 
 ---
 

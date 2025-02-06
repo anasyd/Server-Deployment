@@ -1,4 +1,4 @@
-This guide includes instructions for setting up SSH keys for GitHub and configuring your `~/.ssh/config` file if you host multiple repositories using different SSH keys and also configuring Nginx as a reverse proxy using both the traditional `sites-available`/`sites-enabled` method and the `conf.d` method.
+This guide includes setting up your nodeJS app on a server using pm2 and configuring Nginx as a reverse proxy using both the traditional `sites-available`/`sites-enabled` method and the `conf.d` method.
 
 ---
 

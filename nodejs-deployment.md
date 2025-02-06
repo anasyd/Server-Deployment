@@ -150,7 +150,7 @@ For more detailed instructions, visit GitHub’s official help page:
 ---
 
 ## Configuring SSH for Multiple Repositories
-[Read Here]([https://github.com/anasyd/Server-Deployment/blob/main/setup-github-for-multiple-repos.md)
+[Read Here](https://github.com/anasyd/Server-Deployment/blob/main/setup-github-for-multiple-repos.md).
 
 ---
 

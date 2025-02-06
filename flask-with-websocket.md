@@ -81,7 +81,7 @@ To manage your Flask app as a service, create a systemd unit file. For example:
 5. **Paste the Following Configuration:**  
     (Adjust paths, usernames, and filenames as needed.)
     
-    ```ini
+```ini
     [Unit]
     Description=Gunicorn instance to serve your Flask app with WebSocket support
     After=network.target

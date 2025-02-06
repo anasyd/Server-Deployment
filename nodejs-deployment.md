@@ -150,51 +150,11 @@ For more detailed instructions, visit GitHub’s official help page:
 ---
 
 ## Configuring SSH for Multiple Repositories
-
-If you are hosting different repositories that require different SSH keys, you can configure your SSH client to use the correct key for each repository by creating (or editing) the `~/.ssh/config` file.
-
-### Example Configuration
-
-Create or open the `~/.ssh/config` file and add entries similar to the following:
-
-```plaintext
-# Backend Repository
-Host github.com-anasyd-backend
-    HostName github.com
-    IdentityFile /home/ubuntu/.ssh/ejs_key_ed25519
-
-# Frontend Repository
-Host github.com-anasyd-frontend
-    HostName github.com
-    IdentityFile /home/ubuntu/.ssh/flask_key
-```
-
-**How It Works:**
-
-- **Host**: This is an alias you use when connecting. Instead of using `github.com`, you’ll use `github.com-anasyd-backend` or `github.com-anasyd-frontend` in your Git commands.
-- **HostName**: This is the actual host name (GitHub).
-- **IdentityFile**: This specifies the path to the SSH key you want to use.
-
-### Cloning Using Custom Hostnames
-
-When cloning repositories, use the alias defined in your `~/.ssh/config` file. For example:
-
-- **Backend Repository:**
-    
-    ```sh
-    git clone git@github.com-anasyd-backend:user/backend_repo.git
-    ```
-    
-- **Frontend Repository:**
-    
-    ```sh
-    git clone git@github.com-anasyd-frontend:user/frontend_repo.git
-    ```
-    
+[Read Here]([https://github.com/anasyd/Server-Deployment/blob/main/setup-github-for-multiple-repos.md)
 
 ---
 
-## Cloning Your Repository (Single or Multiple)
+## Cloning Your Repository
 
 For a single repository, clone using Git:
 
@@ -202,7 +162,7 @@ For a single repository, clone using Git:
 git clone git@github.com:user/repo_name.git
 ```
 
-If you are using a custom host from your SSH config for multiple repositories, use the appropriate alias as shown above.
+If you are using a custom host from your SSH config for multiple repositories, use the appropriate alias.
 
 Then navigate into the repository and install dependencies:
 
